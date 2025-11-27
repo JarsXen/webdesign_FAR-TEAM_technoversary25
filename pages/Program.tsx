@@ -1,13 +1,13 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Trash2, Trees, Recycle, Map, CheckCircle } from 'lucide-react';
+import { ArrowRight, Trash2, Trees, Recycle, Map, CheckCircle, Leaf } from 'lucide-react';
 
 const Program: React.FC = () => {
   return (
-    <div className="pb-20 bg-slate-50 min-h-screen">
+    <div className="pb-20 bg-slate-50 dark:bg-slate-900 min-h-screen transition-colors duration-300">
       {/* Hero Section */}
-      <div className="relative bg-slate-900 text-white pt-32 pb-24 px-4 overflow-hidden rounded-b-[3rem]">
+      <div className="relative bg-slate-900 dark:bg-black text-white pt-32 pb-24 px-4 overflow-hidden rounded-b-[3rem]">
         <div className="absolute inset-0">
            <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] bg-emerald-500/20 rounded-full blur-[100px] animate-pulse-slow"></div>
            <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-500/20 rounded-full blur-[100px] animate-pulse-slow"></div>
@@ -27,14 +27,18 @@ const Program: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20 space-y-20">
         
         {/* 1. Bank Sampah Digital */}
-        <section id="bank-sampah" className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-slate-100 scroll-mt-28">
+        <section 
+          id="bank-sampah" 
+          className="bg-white dark:bg-slate-800 rounded-3xl p-8 md:p-12 shadow-xl border border-slate-100 dark:border-slate-700 scroll-mt-28 transition-all hover:-translate-y-1 will-change-transform"
+          style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}
+        >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="order-2 lg:order-1">
-              <div className="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 mb-6">
+              <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-2xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6">
                 <Trash2 size={32} />
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Bank Sampah Digital</h2>
-              <p className="text-slate-600 text-lg mb-6 leading-relaxed">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Bank Sampah Digital</h2>
+              <p className="text-slate-600 dark:text-slate-300 text-lg mb-6 leading-relaxed">
                 Transformasi manajemen limbah rumah tangga menjadi bernilai ekonomi. Melalui aplikasi kami, setiap sampah yang Anda pilah dapat ditukar menjadi poin belanja atau uang tunai.
               </p>
               <ul className="space-y-4 mb-8">
@@ -43,17 +47,17 @@ const Program: React.FC = () => {
                   "Konversi sampah anorganik jadi Rupiah",
                   "Jadwal penjemputan fleksibel"
                 ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-slate-700 font-medium">
+                  <li key={i} className="flex items-center gap-3 text-slate-700 dark:text-slate-300 font-medium">
                     <CheckCircle size={20} className="text-emerald-500" />
                     {item}
                   </li>
                 ))}
               </ul>
-              <Link to="/guide" className="inline-flex items-center gap-2 text-emerald-600 font-bold hover:gap-3 transition-all">
+              <Link to="/guide" className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold hover:gap-3 transition-all">
                 Lihat Panduan Pemilahan <ArrowRight size={18} />
               </Link>
             </div>
-            <div className="order-1 lg:order-2 relative h-[400px] rounded-2xl overflow-hidden group shadow-lg">
+            <div className="order-1 lg:order-2 relative h-[400px] rounded-2xl overflow-hidden group shadow-lg border border-slate-100 dark:border-slate-700">
               <img 
                 src="/images/article-bank-sampah.jpg" 
                 alt="Bank Sampah" 
@@ -62,15 +66,19 @@ const Program: React.FC = () => {
                   (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=1000&auto=format&fit=crop';
                 }}
               />
-              <div className="absolute inset-0 bg-emerald-900/10 group-hover:bg-transparent transition-colors"></div>
+              <div className="absolute inset-0 bg-emerald-900/10 dark:bg-black/30 group-hover:bg-transparent transition-colors"></div>
             </div>
           </div>
         </section>
 
         {/* 2. Konservasi Alam */}
-        <section id="konservasi" className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-slate-100 scroll-mt-28">
+        <section 
+          id="konservasi" 
+          className="bg-white dark:bg-slate-800 rounded-3xl p-8 md:p-12 shadow-xl border border-slate-100 dark:border-slate-700 scroll-mt-28 transition-all hover:-translate-y-1 will-change-transform"
+          style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}
+        >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="relative h-[400px] rounded-2xl overflow-hidden group shadow-lg">
+            <div className="relative h-[400px] rounded-2xl overflow-hidden group shadow-lg border border-slate-100 dark:border-slate-700">
                <img 
                 src="/images/article-mangrove.jpg" 
                 alt="Konservasi Alam" 
@@ -79,13 +87,14 @@ const Program: React.FC = () => {
                   (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=1000&auto=format&fit=crop';
                 }}
               />
+              <div className="absolute inset-0 bg-teal-900/10 dark:bg-black/30 group-hover:bg-transparent transition-colors"></div>
             </div>
             <div>
-              <div className="w-16 h-16 bg-teal-100 rounded-2xl flex items-center justify-center text-teal-600 mb-6">
+              <div className="w-16 h-16 bg-teal-100 dark:bg-teal-900/30 rounded-2xl flex items-center justify-center text-teal-600 dark:text-teal-400 mb-6">
                 <Trees size={32} />
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Konservasi Alam</h2>
-              <p className="text-slate-600 text-lg mb-6 leading-relaxed">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Konservasi Alam</h2>
+              <p className="text-slate-600 dark:text-slate-300 text-lg mb-6 leading-relaxed">
                 Program restorasi ekosistem kritis, mulai dari penanaman mangrove di pesisir hingga reboisasi hutan lindung. Kami mengajak masyarakat untuk menjadi orang tua asuh pohon.
               </p>
               <ul className="space-y-4 mb-8">
@@ -94,13 +103,13 @@ const Program: React.FC = () => {
                   "Monitoring pertumbuhan via satelit",
                   "Pemberdayaan petani lokal"
                 ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-slate-700 font-medium">
+                  <li key={i} className="flex items-center gap-3 text-slate-700 dark:text-slate-300 font-medium">
                     <CheckCircle size={20} className="text-teal-500" />
                     {item}
                   </li>
                 ))}
               </ul>
-              <Link to="/education" className="inline-flex items-center gap-2 text-teal-600 font-bold hover:gap-3 transition-all">
+              <Link to="/education" className="inline-flex items-center gap-2 text-teal-600 dark:text-teal-400 font-bold hover:gap-3 transition-all">
                 Pelajari Ekosistem <ArrowRight size={18} />
               </Link>
             </div>
@@ -108,8 +117,14 @@ const Program: React.FC = () => {
         </section>
 
         {/* 3. Zero Waste Lifestyle */}
-        <section id="zero-waste" className="bg-slate-900 rounded-3xl p-8 md:p-16 text-white relative overflow-hidden">
+        <section 
+          id="zero-waste" 
+          className="bg-slate-900 dark:bg-black rounded-3xl p-8 md:p-16 text-white relative overflow-hidden shadow-2xl transition-all hover:-translate-y-1 border border-slate-800 dark:border-slate-800 will-change-transform"
+          style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}
+        >
           <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -mr-20 -mt-20"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -ml-20 -mb-20"></div>
+          
           <div className="relative z-10 text-center max-w-3xl mx-auto">
              <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center mx-auto mb-8 text-emerald-400">
                <Recycle size={40} />
@@ -120,15 +135,15 @@ const Program: React.FC = () => {
              </p>
              
              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-               <div className="bg-white/10 p-6 rounded-xl border border-white/10">
+               <div className="bg-white/10 p-6 rounded-xl border border-white/10 hover:bg-white/15 transition-colors">
                  <h4 className="font-bold text-xl mb-2 text-emerald-400">Refuse</h4>
                  <p className="text-sm text-slate-300">Menolak penggunaan plastik sekali pakai dalam aktivitas harian.</p>
                </div>
-               <div className="bg-white/10 p-6 rounded-xl border border-white/10">
+               <div className="bg-white/10 p-6 rounded-xl border border-white/10 hover:bg-white/15 transition-colors">
                  <h4 className="font-bold text-xl mb-2 text-emerald-400">Reduce</h4>
                  <p className="text-sm text-slate-300">Mengurangi konsumsi barang yang berpotensi menjadi sampah.</p>
                </div>
-               <div className="bg-white/10 p-6 rounded-xl border border-white/10">
+               <div className="bg-white/10 p-6 rounded-xl border border-white/10 hover:bg-white/15 transition-colors">
                  <h4 className="font-bold text-xl mb-2 text-emerald-400">Reuse</h4>
                  <p className="text-sm text-slate-300">Menggunakan kembali barang yang masih layak pakai.</p>
                </div>
@@ -137,14 +152,18 @@ const Program: React.FC = () => {
         </section>
 
         {/* 4. Eco Tour */}
-        <section id="eco-tour" className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-slate-100 scroll-mt-28">
+        <section 
+          id="eco-tour" 
+          className="bg-white dark:bg-slate-800 rounded-3xl p-8 md:p-12 shadow-xl border border-slate-100 dark:border-slate-700 scroll-mt-28 transition-all hover:-translate-y-1 will-change-transform"
+          style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}
+        >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="order-2 lg:order-1">
-              <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 mb-6">
+              <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center text-blue-600 dark:text-blue-400 mb-6">
                 <Map size={32} />
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Eco Tour</h2>
-              <p className="text-slate-600 text-lg mb-6 leading-relaxed">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Eco Tour</h2>
+              <p className="text-slate-600 dark:text-slate-300 text-lg mb-6 leading-relaxed">
                 Jelajahi keindahan alam Indonesia dengan cara yang bertanggung jawab. Paket wisata edukasi yang menggabungkan petualangan dengan aksi pelestarian lingkungan.
               </p>
               <ul className="space-y-4 mb-8">
@@ -153,17 +172,17 @@ const Program: React.FC = () => {
                   "Workshop kerajinan daur ulang lokal",
                   "Volunteering membersihkan pantai/gunung"
                 ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-slate-700 font-medium">
+                  <li key={i} className="flex items-center gap-3 text-slate-700 dark:text-slate-300 font-medium">
                     <CheckCircle size={20} className="text-blue-500" />
                     {item}
                   </li>
                 ))}
               </ul>
-              <Link to="/contact" className="inline-flex items-center gap-2 text-blue-600 font-bold hover:gap-3 transition-all">
+              <Link to="/contact" className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold hover:gap-3 transition-all">
                 Daftar Trip Berikutnya <ArrowRight size={18} />
               </Link>
             </div>
-             <div className="order-1 lg:order-2 relative h-[400px] rounded-2xl overflow-hidden group shadow-lg">
+             <div className="order-1 lg:order-2 relative h-[400px] rounded-2xl overflow-hidden group shadow-lg border border-slate-100 dark:border-slate-700">
                <img 
                 src="/images/gallery-1.jpg" 
                 alt="Eco Tour" 
@@ -172,14 +191,14 @@ const Program: React.FC = () => {
                   (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1000&auto=format&fit=crop';
                 }}
               />
-               <div className="absolute inset-0 bg-blue-900/10 group-hover:bg-transparent transition-colors"></div>
+               <div className="absolute inset-0 bg-blue-900/10 dark:bg-black/30 group-hover:bg-transparent transition-colors"></div>
             </div>
           </div>
         </section>
 
         {/* CTA Bottom */}
         <div className="text-center pb-10">
-          <h3 className="text-2xl font-bold text-slate-900 mb-6">Tertarik berkolaborasi dalam program kami?</h3>
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Tertarik berkolaborasi dalam program kami?</h3>
           <Link to="/contact" className="inline-block px-8 py-4 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition shadow-lg shadow-emerald-600/30">
             Hubungi Mitra Kami
           </Link>

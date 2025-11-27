@@ -1,41 +1,90 @@
 import React, { useState } from 'react';
-import { Search, BookOpen, Sparkles, Trash2, RefreshCw, ArrowRight, Wallet, Quote, Camera } from 'lucide-react';
+import { Search, BookOpen, Sparkles, Trash2, RefreshCw, ArrowRight, Wallet, Quote, Camera, X, ExternalLink, Calendar, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Article, WasteType } from '../types';
+import { Article, WasteType, GalleryItem } from '../types';
 import { generateEcoTip } from '../services/geminiService';
 
 const articles: Article[] = [
   {
     id: '1',
-    title: 'Mengenal Gaya Hidup Zero Waste',
-    excerpt: 'Panduan lengkap untuk pemula yang ingin mengurangi produksi sampah harian mulai dari rumah.',
-    category: 'Gaya Hidup',
-    imageUrl: '/images/article-zero-waste.jpg',
-    date: '10 Jan 2025'
+    title: 'Manfaat Bank Sampah dan Cara Kerjanya yang Perlu Diketahui',
+    excerpt: 'Masih bingung dengan manfaat dan cara kerja bank sampah? Mari kenali lebih dalam seputar bank sampah agar Anda bisa turut berkontribusi di dalamnya.',
+    category: 'Edukasi',
+    imageUrl: '/images/bank-sampah.jpg',
+    date: '24 Nov 2025',
+    source: 'Rinso.com',
+    url: 'https://shorturl.at/vE3d8'
   },
   {
     id: '2',
-    title: 'Inovasi Pengolahan Limbah Plastik',
-    excerpt: 'Teknologi terbaru mengubah sampah plastik menjadi batako ramah lingkungan yang kuat.',
-    category: 'Inovasi',
-    imageUrl: '/images/article-plastic.jpg',
-    date: '12 Jan 2025'
+    title: 'Mencintai dan Melestarikan Alam Sejak Dini',
+    excerpt: 'Menyoroti pentingnya menanam kebiasaan cinta alam dari anak-anak: menanam pohon, hemat air, dan memisahkan sampah.',
+    category: 'Edukasi',
+    imageUrl: '/images/mencintai-lingkungan.jpg',
+    date: '24 Nov 2025',
+    source: 'Kemendikdasmen',
+    url: 'https://shorturl.at/iZPjT'
   },
   {
     id: '3',
-    title: 'Pentingnya Hutan Bakau bagi Pesisir',
-    excerpt: 'Mengapa konservasi mangrove sangat vital untuk mencegah abrasi dan menjaga ekosistem laut.',
+    title: 'Membumikan Kesadaran Lingkungan dengan Gerakan Kampanye Desa',
+    excerpt: 'Berisi strategi efektif kampanye lingkungan di desa, termasuk penyuluhan publik, aksi nyata seperti bersih-bersih dan penanaman pohon, serta peran aktif masyarakat dan penggerak lokal untuk menjaga lingkungan.',
     category: 'Edukasi',
-    imageUrl: '/images/article-mangrove.jpg',
-    date: '15 Jan 2025'
+    imageUrl: '/images/lingkungan.png',
+    date: '25 Nov 2025',
+    source: 'kuripankidul.desa.id',
+    url: 'https://shorturl.at/rMNAG'
   },
   {
     id: '4',
-    title: 'Bank Sampah: Ubah Sampah Jadi Rupiah',
-    excerpt: 'Cara kerja bank sampah digital dan bagaimana kamu bisa mendapatkan keuntungan finansial.',
+    title: 'Contoh Teknologi Ramah Lingkungan Beserta Manfaatnya',
+    excerpt: 'Gambaran berbagai teknologi ramah lingkungan seperti panel surya, turbin angin, dan kendaraan listrik yang membantu mengurangi polusi serta menjaga keberlanjutan bumi.',
     category: 'Edukasi',
-    imageUrl: '/images/article-bank-sampah.jpg',
-    date: '18 Jan 2025'
+    imageUrl: '/images/artikel 4.png',
+    date: '25 Nov 2025',
+    source: 'vida.id',
+    url: 'https://shorturl.at/EYK1w'
+  },
+  {
+    id: '5',
+    title: 'Lingkungan Bersih Ciptakan Hidup Sehat',
+    excerpt: 'Kebersihan lingkungan menjadi faktor penting dalam menciptakan kehidupan yang sehat. Upaya menjaga kebersihan dapat mengurangi penyakit dan meningkatkan kualitas hidup.',
+    category: 'Gaya Hidup',
+    imageUrl: '/images/artikel 5.png',
+    date: '25 Nov 2025',
+    source: 'dlh.bulelengkab.go.id',
+    url: 'https://shorturl.at/fZ9xv'
+  },
+];
+
+const galleryItems: GalleryItem[] = [
+  {
+    id: 1,
+    image: '/images/galeri 1.png',
+    title: 'Kegiatan Menanam Pohon',
+    date: '26 November 2025',
+    description: 'Gerakan kolaboratif masyarakat dalam menanam pohon sebagai langkah nyata menjaga ekosistem dan memperbaiki kualitas lingkungan.'
+  },
+  {
+    id: 2,
+    image: '/images/galeri 2.png',
+    title: 'Kegiatan Bersih-bersih Lingkungan',
+    date: '26 November 2025',
+    description: 'Gotong royong warga dalam memungut sampah, memilah limbah, dan melakukan penanaman untuk menciptakan lingkungan yang lebih bersih dan asri.'
+  },
+  {
+    id: 3,
+    image: '/images/galeri 3.png',
+    title: 'Pembersihan Sungai / Pantai',
+    date: '26 November 2025',
+    description: 'Kegiatan aksi bersih-bersih di area sungai/pantai sebagai upaya menjaga kebersihan lingkungan dan mengurangi pencemaran.'
+  },
+  {
+    id: 4,
+    image: '/images/galeri 4.png',
+    title: 'Edukasi Lingkungan (Workshop / Sosialisasi)',
+    date: '26 November 2025',
+    description: 'Kegiatan workshop dan sosialisasi yang membahas pentingnya pelestarian lingkungan serta praktik ramah lingkungan.'
   }
 ];
 
@@ -52,6 +101,12 @@ const Education: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [selectedWaste, setSelectedWaste] = useState<string>(wasteTypes[0].id);
   const [weight, setWeight] = useState<number>(0);
+  
+  // State untuk "Lihat Semua" Artikel
+  const [showAllArticles, setShowAllArticles] = useState(false);
+  
+  // State untuk Modal Galeri
+  const [selectedGalleryItem, setSelectedGalleryItem] = useState<GalleryItem | null>(null);
 
   const handleGenerateTip = async () => {
     if (!tipTopic) return;
@@ -66,6 +121,9 @@ const Education: React.FC = () => {
     const waste = wasteTypes.find(w => w.id === selectedWaste);
     return waste ? waste.pricePerKg * weight : 0;
   };
+
+  // Logic untuk menampilkan artikel (Semua atau Terbatas 4)
+  const displayedArticles = showAllArticles ? articles : articles.slice(0, 4);
 
   return (
     <div className="pb-20">
@@ -197,7 +255,7 @@ const Education: React.FC = () => {
           {/* Image Visual */}
           <div className="relative h-full min-h-[400px] rounded-3xl overflow-hidden shadow-lg group">
             <img 
-              src="/images/feature-recycle.jpg" 
+              src="/images/bank-sampah-beranda.png" 
               alt="Recycling Guide" 
               className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
               onError={(e) => {
@@ -218,14 +276,28 @@ const Education: React.FC = () => {
         <section>
           <div className="flex justify-between items-end mb-8">
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Artikel & Berita</h2>
-            <button className="hidden md:flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all">
-              Lihat Semua <ArrowRight size={18} />
-            </button>
+            {/* Tombol Lihat Semua yang Fungsional */}
+            {articles.length > 4 && (
+              <button 
+                onClick={() => setShowAllArticles(!showAllArticles)}
+                className="flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all"
+              >
+                {showAllArticles ? 'Lebih Sedikit' : 'Lihat Semua'} 
+                {showAllArticles ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              </button>
+            )}
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {articles.map((article) => (
-              <div key={article.id} className="group bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-up">
+            {displayedArticles.map((article) => (
+              <a 
+                key={article.id} 
+                href={article.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-100 dark:border-slate-700 cursor-pointer flex flex-col will-change-transform"
+                style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}
+              >
                 <div className="h-48 overflow-hidden relative">
                   <img 
                     src={article.imageUrl} 
@@ -239,19 +311,25 @@ const Education: React.FC = () => {
                     {article.category}
                   </div>
                 </div>
-                <div className="p-5">
-                  <div className="text-xs text-slate-400 font-medium mb-2">{article.date}</div>
+                <div className="p-5 flex-1 flex flex-col">
+                  {/* Menampilkan Sumber Artikel dan Tanggal */}
+                  <div className="flex items-center gap-2 text-xs text-slate-400 font-medium mb-2">
+                    <span>{article.date}</span>
+                    <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600"></span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">{article.source}</span>
+                  </div>
+
                   <h3 className="font-bold text-slate-900 dark:text-white text-lg mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                     {article.title}
                   </h3>
-                  <p className="text-slate-500 dark:text-slate-400 text-sm line-clamp-3 mb-4">
+                  <p className="text-slate-500 dark:text-slate-400 text-sm line-clamp-3 mb-4 flex-1">
                     {article.excerpt}
                   </p>
-                  <div className="w-8 h-8 rounded-full bg-slate-50 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-300 group-hover:bg-primary group-hover:text-white transition-colors ml-auto">
-                    <ArrowRight size={14} />
+                  <div className="flex items-center text-sm font-bold text-slate-400 group-hover:text-primary transition-colors mt-auto">
+                    Baca Selengkapnya <ExternalLink size={14} className="ml-2" />
                   </div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </section>
@@ -265,24 +343,34 @@ const Education: React.FC = () => {
              </div>
              <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Galeri Aksi Nyata</h2>
              <p className="text-slate-500 dark:text-slate-400 mt-2 max-w-2xl mx-auto">
-               Momen-momen kebersamaan kami dalam upaya pelestarian lingkungan. Dari penanaman pohon hingga bersih-bersih pantai.
+               Klik foto untuk melihat detail kegiatan dan momen kebersamaan kami dalam melestarikan lingkungan.
              </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-             {[1, 2, 3, 4].map((num) => (
-               <div key={num} className="rounded-2xl overflow-hidden h-64 group relative shadow-lg cursor-pointer">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+             {galleryItems.map((item) => (
+               <div 
+                  key={item.id} 
+                  className="rounded-2xl overflow-hidden h-72 group relative shadow-lg cursor-pointer bg-slate-100 dark:bg-slate-800"
+                  onClick={() => setSelectedGalleryItem(item)}
+               >
                   <img 
-                    src={`/images/gallery-${num}.jpg`} 
-                    alt={`Dokumentasi Aksi ${num}`}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    src={item.image} 
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
                     onError={(e) => {
                        (e.target as HTMLImageElement).src = `https://images.unsplash.com/photo-1591191853878-8b4474469777?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3`;
                     }}
                   />
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="text-white font-medium text-sm">Kegiatan Lingkungan #{num}</span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+                  
+                  {/* Overlay Text */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                    <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-1 block">Dokumentasi</span>
+                    <h4 className="text-white font-bold text-lg leading-tight mb-2">{item.title}</h4>
+                    <p className="text-slate-300 text-xs line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100">
+                      Klik untuk detail kegiatan
+                    </p>
                   </div>
                </div>
              ))}
@@ -290,6 +378,67 @@ const Education: React.FC = () => {
         </section>
 
       </div>
+
+      {/* Gallery Modal (Lightbox) */}
+      {selectedGalleryItem && (
+        <div 
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/95 backdrop-blur-md animate-in fade-in duration-300"
+          onClick={() => setSelectedGalleryItem(null)}
+        >
+          <div 
+            className="relative w-full max-w-5xl bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]"
+            onClick={e => e.stopPropagation()}
+          >
+            <button 
+              onClick={() => setSelectedGalleryItem(null)}
+              className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors backdrop-blur-sm"
+            >
+              <X size={20} />
+            </button>
+
+            {/* Image Side */}
+            <div className="w-full md:w-2/3 bg-black flex items-center justify-center h-64 md:h-auto">
+              <img 
+                src={selectedGalleryItem.image} 
+                alt={selectedGalleryItem.title} 
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                    (e.target as HTMLImageElement).src = `https://images.unsplash.com/photo-1591191853878-8b4474469777?q=80&w=1000&auto=format&fit=crop`;
+                }}
+              />
+            </div>
+
+            {/* Content Side */}
+            <div className="w-full md:w-1/3 p-8 flex flex-col overflow-y-auto">
+              <div className="mb-6">
+                <div className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 text-sm font-bold bg-emerald-100 dark:bg-emerald-900/30 px-3 py-1 rounded-full mb-4">
+                  <Calendar size={14} />
+                  {selectedGalleryItem.date}
+                </div>
+                <h3 className="text-2xl md:text-3xl font-display font-bold text-slate-900 dark:text-white mb-4">
+                  {selectedGalleryItem.title}
+                </h3>
+                <div className="w-12 h-1 bg-emerald-500 rounded-full mb-6"></div>
+                
+                <div className="prose dark:prose-invert text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                  {selectedGalleryItem.description}
+                </div>
+              </div>
+
+              <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800">
+                 <div className="flex items-start gap-3">
+                   <MapPin className="text-slate-400 shrink-0 mt-1" size={18} />
+                   <div>
+                     <span className="block text-xs font-bold text-slate-400 uppercase">Lokasi Kegiatan</span>
+                     <span className="text-slate-800 dark:text-slate-200 font-medium text-sm">Indonesia, Bumi Pertiwi</span>
+                   </div>
+                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

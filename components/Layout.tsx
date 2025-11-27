@@ -12,6 +12,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const [logoError, setLogoError] = useState(false);
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
@@ -84,12 +85,23 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div className="flex justify-between items-center h-12">
               <div className="flex items-center">
                 <Link to="/" className="flex items-center gap-2 group">
-                  <div className="bg-gradient-to-br from-emerald-500 to-teal-500 p-2 rounded-lg text-white shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform duration-300">
-                    <Globe className="h-5 w-5" />
-                  </div>
-                  <span className="font-display font-bold text-xl tracking-tight text-slate-800 dark:text-white group-hover:text-primary transition-colors">
-                    Eco<span className="text-primary">Digital</span>
-                  </span>
+                  {!logoError ? (
+                    <img 
+                      src="/images/ecodigital-farteam-logo-fix.png" 
+                      alt="EcoDigital Logo" 
+                      className="h-16 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                      onError={() => setLogoError(true)}
+                    />
+                  ) : (
+                    <>
+                      <div className="bg-gradient-to-br from-emerald-500 to-teal-500 p-2 rounded-lg text-white shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform duration-300">
+                        <Globe className="h-5 w-5" />
+                      </div>
+                      <span className="font-display font-bold text-xl tracking-tight text-slate-800 dark:text-white group-hover:text-primary transition-colors">
+                        Eco<span className="text-primary">Digital</span>
+                      </span>
+                    </>
+                  )}
                 </Link>
               </div>
 
@@ -195,10 +207,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 mb-12">
             <div className="md:col-span-5">
               <div className="flex items-center gap-2 text-white mb-6">
-                <div className="bg-white/10 p-2 rounded-lg">
-                  <Leaf className="h-6 w-6 text-primary" />
-                </div>
-                <span className="font-display font-bold text-xl">EcoDigital Nusantara</span>
+                {!logoError ? (
+                   <img 
+                      src="/images/ecodigital-farteam-logo-fix.png" 
+                      alt="EcoDigital Logo" 
+                      className="h-12 w-auto object-contain"
+                   />
+                ) : (
+                  <>
+                    <div className="bg-white/10 p-2 rounded-lg">
+                      <Leaf className="h-6 w-6 text-primary" />
+                    </div>
+                    <span className="font-display font-bold text-xl">EcoDigital Nusantara</span>
+                  </>
+                )}
               </div>
               <p className="text-slate-400 text-sm leading-relaxed max-w-sm mb-6">
                 Menggabungkan kreativitas desain dan kecerdasan teknologi untuk masa depan bumi yang lebih hijau. Technoversary 2025 Entry.
@@ -235,7 +257,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </div>
 
           <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-4">
-            <p>&copy; 2025 Technoversary Team. All rights reserved.</p>
+            <p>&copy; 2025 FAR TEAM. All rights reserved.</p>
             <div className="flex items-center gap-1">
               <span>Dibuat dengan</span>
               <Heart size={12} className="text-red-500 fill-red-500" />

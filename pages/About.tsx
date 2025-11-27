@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { CheckCircle2, Users, Target, Heart, Maximize2, X, ImageOff, Quote } from 'lucide-react';
 import { TeamMember } from '../types';
 
+// <--- GANTI NAMA FILE FOTO TIM DI SINI --->
 const teamMembers: TeamMember[] = [
   { 
     name: "Fajar Irwansah", 
@@ -31,19 +32,26 @@ const About: React.FC = () => {
   };
 
   return (
-    <div className="pb-20">
-      {/* Header with Abstract BG */}
-      <div className="relative bg-slate-900 dark:bg-black text-white py-32 overflow-hidden rounded-b-[3rem]">
-        <div className="absolute inset-0 opacity-20">
+    <div className="pb-20 bg-white dark:bg-slate-950 transition-colors duration-300">
+      {/* Header Adaptif (Light/Dark) */}
+      <div className="relative bg-emerald-50 dark:bg-slate-900 pt-32 pb-24 overflow-hidden rounded-b-[3rem] transition-colors duration-300">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-[0.03] dark:opacity-20 pointer-events-none">
             <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
         </div>
-        <div className="absolute -right-20 -top-20 w-96 h-96 bg-emerald-500 rounded-full blur-3xl opacity-20"></div>
-        <div className="absolute -left-20 bottom-0 w-72 h-72 bg-teal-500 rounded-full blur-3xl opacity-20"></div>
+        
+        {/* Blobs - Adjusted for both modes */}
+        <div className="absolute -right-20 -top-20 w-96 h-96 bg-emerald-400/20 dark:bg-emerald-500/20 rounded-full blur-3xl mix-blend-multiply dark:mix-blend-normal"></div>
+        <div className="absolute -left-20 bottom-0 w-72 h-72 bg-teal-400/20 dark:bg-teal-500/20 rounded-full blur-3xl mix-blend-multiply dark:mix-blend-normal"></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <span className="text-emerald-400 font-semibold tracking-wider uppercase text-sm mb-4 block">Know Us Better</span>
-          <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">Tentang Kami</h1>
-          <p className="text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          <span className="inline-block py-1 px-3 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-bold tracking-wider uppercase text-xs mb-4">
+            Know Us Better
+          </span>
+          <h1 className="text-5xl md:text-6xl font-display font-bold mb-6 text-slate-900 dark:text-white transition-colors">
+            Tentang Kami
+          </h1>
+          <p className="text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed transition-colors">
             Menggabungkan passion teknologi dengan kepedulian lingkungan untuk Technoversary 2025.
           </p>
         </div>
@@ -53,16 +61,17 @@ const About: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="relative">
-             <div className="absolute -inset-4 bg-gradient-to-br from-emerald-200 to-teal-200 dark:from-emerald-900 dark:to-teal-900 rounded-[2rem] blur-lg opacity-50"></div>
+             <div className="absolute -inset-4 bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900 dark:to-teal-900 rounded-[2rem] blur-lg opacity-70 dark:opacity-50 transition-colors"></div>
+             {/* <--- GANTI NAMA FILE GAMBAR MISI DI SINI */}
              <img 
                 src="/images/about-mission.jpg" 
                 alt="Misi Kami" 
                 className="relative rounded-[2rem] shadow-2xl w-full object-cover z-10"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1471&auto=format&fit=crop';
+                  (e.target as HTMLImageElement).src = '/images/tentang kami.png';
                 }}
               />
-              <div className="absolute -bottom-10 -right-10 z-20 bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl max-w-xs hidden md:block animate-float animation-delay-1000">
+              <div className="absolute -bottom-10 -right-10 z-20 bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl max-w-xs hidden md:block animate-float animation-delay-1000 border border-slate-100 dark:border-slate-700">
                 <Quote className="text-emerald-500 mb-4" size={32} />
                 <p className="text-slate-600 dark:text-slate-300 font-medium italic">"Technology is best when it brings people together for a cause."</p>
               </div>

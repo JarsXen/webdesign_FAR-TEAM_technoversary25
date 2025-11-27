@@ -43,9 +43,9 @@ const Contact: React.FC = () => {
                     <div>
                       <h3 className="font-bold text-lg mb-1">Lokasi</h3>
                       <p className="text-slate-300 leading-relaxed">
-                        Gedung Technoversary, Lt. 3<br />
-                        Jl. Pendidikan No. 25<br />
-                        Jakarta Selatan, 12345
+                        Kampus 4 UAD, Lt. 4<br />
+                        Jl. Ringroad Selatan<br />
+                        Yogyakarta, 55166
                       </p>
                     </div>
                   </div>
@@ -66,7 +66,7 @@ const Contact: React.FC = () => {
                     </div>
                     <div>
                       <h3 className="font-bold text-lg mb-1">Telepon</h3>
-                      <p className="text-slate-300">+62 (21) 555-0123</p>
+                      <p className="text-slate-300">+62 123-456-789</p>
                     </div>
                   </div>
                 </div>
@@ -113,7 +113,7 @@ const Contact: React.FC = () => {
                        type="text" 
                        required
                        className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:bg-white dark:focus:bg-slate-800 outline-none transition dark:text-white"
-                       placeholder="John Doe"
+                       placeholder="Far Team"
                      />
                    </div>
                    <div className="space-y-2">
@@ -122,7 +122,7 @@ const Contact: React.FC = () => {
                        type="email" 
                        required
                        className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:bg-white dark:focus:bg-slate-800 outline-none transition dark:text-white"
-                       placeholder="email@anda.com"
+                       placeholder="email@kamu.com"
                      />
                    </div>
                  </div>

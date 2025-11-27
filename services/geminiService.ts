@@ -22,11 +22,11 @@ export const chatWithEcoBot = async (message: string): Promise<string> => {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
-      contents: `Kamu adalah EcoBot, asisten pintar untuk website EcoDigital Nusantara. Jawab pertanyaan berikut terkait lingkungan hidup, daur ulang, atau konservasi alam dengan ramah dan edukatif: "${message}". Jawab maksimal dalam 3-4 kalimat.`,
+      contents: `Kamu adalah EcoBot, asisten pintar untuk website EcoDigital Nusantara dan website ini di buat oleh FAR TEAM yang bertujuan untuk memberikan edukasi kepada masyrakat penting nya menjaga lingkungan. Jawab pertanyaan berikut terkait lingkungan hidup, daur ulang, atau konservasi alam dengan ramah dan edukatif: "${message}". Jawab maksimal dalam 3-4 kalimat.`,
     });
     return response.text || "Maaf, saya tidak dapat memproses permintaan tersebut saat ini.";
   } catch (error) {
     console.error("EcoBot error:", error);
-    return "Maaf, koneksi ke server EcoBot sedang sibuk. Silakan periksa konfigurasi API Key Anda atau coba lagi nanti.";
+    return "Maaf, koneksi ke server EcoBot sedang sibuk. Silakan coba lagi nanti ya!.";
   }
 };

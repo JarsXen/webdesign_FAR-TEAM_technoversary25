@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Sprout, Zap, ShieldCheck, Trash2, Trees, Recycle, Map, CheckCircle2 } from 'lucide-react';
 
-// --- Komponen 3D Tilt Card (Ringan & Tanpa Library) ---
+import React, { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, Sprout, Zap, ShieldCheck, Trash2, Trees, Recycle, Map, CheckCircle2, Play, Scan, Award, BarChart3, X, Loader2 } from 'lucide-react';
+
 const TiltCard = ({ children, className, style }: { children: React.ReactNode, className?: string, style?: React.CSSProperties }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
@@ -38,11 +38,14 @@ const TiltCard = ({ children, className, style }: { children: React.ReactNode, c
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`relative transition-transform duration-200 ease-out will-change-transform ${className}`}
+      className={`relative transition-transform duration-200 ease-out will-change-transform overflow-hidden ${className}`}
       style={{
         ...style,
         transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) scale3d(1, 1, 1)`,
         transformStyle: 'preserve-3d',
+        // FIX: Mencegah border-radius glitch (menjadi kotak) saat animasi 3D
+        isolation: 'isolate',
+        WebkitMaskImage: '-webkit-radial-gradient(white, black)', 
       }}
     >
       {children}
@@ -60,7 +63,159 @@ const TiltCard = ({ children, className, style }: { children: React.ReactNode, c
   );
 };
 
+// --- Komponen Modal Simulasi ---
+interface SimulationModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title: string;
+}
+
+const SimulationModal: React.FC<SimulationModalProps> = ({ isOpen, onClose, title }) => {
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    if (isOpen) {
+      setStep(0);
+      const timer1 = setTimeout(() => setStep(1), 800);
+      const timer2 = setTimeout(() => setStep(2), 2500);
+      return () => { clearTimeout(timer1); clearTimeout(timer2); };
+    }
+  }, [isOpen, title]);
+
+  if (!isOpen) return null;
+
+  const renderContent = () => {
+    if (title.includes("Adopsi") || title.includes("Sertifikat")) {
+      return (
+        <div className="flex flex-col items-center text-center p-4">
+          {step < 2 ? (
+            <div className="py-10">
+              <Loader2 className="animate-spin text-emerald-500 mb-4" size={48} />
+              <p className="text-slate-500 animate-pulse">Memproses Data Adopsi...</p>
+            </div>
+          ) : (
+            <div className="bg-white dark:bg-slate-800 border-4 border-double border-emerald-200 dark:border-emerald-900 p-8 rounded-xl shadow-lg w-full max-w-sm animate-in zoom-in duration-300">
+              <Award className="mx-auto text-yellow-500 mb-4" size={64} />
+              <h3 className="font-display font-bold text-2xl text-slate-900 dark:text-white mb-2">Sertifikat Adopsi</h3>
+              <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">Diberikan kepada <span className="font-bold text-slate-800 dark:text-slate-200">Pengunjung #2025</span> atas kontribusi penanaman 1 pohon Mangrove.</p>
+              <div className="bg-emerald-50 dark:bg-emerald-900/30 p-3 rounded text-xs text-emerald-700 dark:text-emerald-300 font-mono">
+                ID: TREE-2025-XE92
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    } 
+    
+    else if (title.includes("Monitoring") || title.includes("Scan")) {
+       return (
+        <div className="w-full h-64 bg-slate-900 rounded-xl relative overflow-hidden flex items-center justify-center">
+          {/* Map Grid Background */}
+          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#22c55e 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
+          
+          {step < 2 ? (
+             <div className="absolute w-full h-2 bg-emerald-500/50 blur-md top-0 animate-[float_2s_linear_infinite]" style={{ animation: 'scan 2s linear infinite' }}></div>
+          ) : (
+             <div className="relative z-10 text-center">
+                <div className="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-500 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold mb-2 animate-pulse">
+                  <div className="w-2 h-2 bg-emerald-500 rounded-full"></div> LIVE SATELLITE
+                </div>
+                <div className="text-white text-4xl font-mono font-bold">98.5%</div>
+                <div className="text-emerald-400 text-xs">Health Index Area A-12</div>
+             </div>
+          )}
+          
+          <style>{`
+            @keyframes scan {
+              0% { top: 0%; opacity: 0; }
+              10% { opacity: 1; }
+              90% { opacity: 1; }
+              100% { top: 100%; opacity: 0; }
+            }
+          `}</style>
+        </div>
+       )
+    }
+
+    else if (title.includes("Tracking") || title.includes("Laporan")) {
+      return (
+        <div className="w-full space-y-4 p-4">
+           {['Sampah Dijemput', 'Sampah Dipilah', 'Daur Ulang Selesai'].map((status, idx) => (
+             <div key={idx} className={`flex items-center gap-4 transition-all duration-500 ${step >= idx ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}>
+               <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${step >= idx ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300 text-slate-300'}`}>
+                 {step >= idx && <CheckCircle2 size={16} />}
+               </div>
+               <div className="flex-1">
+                 <div className={`font-bold ${step >= idx ? 'text-slate-900 dark:text-white' : 'text-slate-400'}`}>{status}</div>
+                 <div className="text-xs text-slate-500">Update: {new Date().toLocaleTimeString()}</div>
+               </div>
+             </div>
+           ))}
+        </div>
+      )
+    }
+
+    // Default Chart
+    return (
+      <div className="flex flex-col items-center justify-center p-6 h-64">
+        <BarChart3 size={64} className="text-slate-300 dark:text-slate-600 mb-4" />
+        <div className="flex items-end gap-2 h-32 w-full justify-center">
+          {[40, 70, 50, 90, 60].map((h, i) => (
+            <div 
+              key={i} 
+              className="w-8 bg-emerald-500 rounded-t-lg transition-all duration-1000 ease-out"
+              style={{ height: step > 0 ? `${h}%` : '0%' }}
+            ></div>
+          ))}
+        </div>
+        <p className="text-sm text-slate-500 mt-4 font-bold">Statistik Realtime: {title}</p>
+      </div>
+    );
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={onClose}></div>
+      <div className="relative bg-white dark:bg-slate-900 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200 border border-white/20">
+        {/* Header */}
+        <div className="flex justify-between items-center p-6 border-b border-slate-100 dark:border-slate-800">
+           <div className="flex items-center gap-3">
+             <div className="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg text-emerald-600 dark:text-emerald-400">
+               <Scan size={20} />
+             </div>
+             <div>
+               <h3 className="font-bold text-slate-900 dark:text-white">Simulasi Fitur</h3>
+               <p className="text-xs text-slate-500">{title}</p>
+             </div>
+           </div>
+           <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors text-slate-500">
+             <X size={20} />
+           </button>
+        </div>
+        
+        {/* Body */}
+        <div className="p-6 bg-slate-50 dark:bg-black/20 min-h-[300px] flex items-center justify-center">
+           {renderContent()}
+        </div>
+
+        {/* Footer */}
+        <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 text-center">
+           <p className="text-xs text-slate-400">Ini adalah simulasi interaktif untuk keperluan demonstrasi Technoversary 2025.</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Home: React.FC = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [activeFeature, setActiveFeature] = useState("");
+
+  const handleFeatureClick = (featureName: string) => {
+    setActiveFeature(featureName);
+    setModalOpen(true);
+  };
+
   const programs = [
     {
       id: 'bank-sampah',
@@ -71,7 +226,7 @@ const Home: React.FC = () => {
       bg: 'bg-emerald-50 dark:bg-emerald-900/30',
       border: 'border-emerald-200 dark:border-emerald-800',
       shadow: 'shadow-emerald-600',
-      image: '/images/article-bank-sampah.jpg',
+      image: '/images/bank-sampah-beranda.png',
       linkText: 'Panduan Pemilahan',
       linkUrl: '/guide',
       features: ['Tracking Realtime', 'Tukar Poin', 'Jemput Bola']
@@ -85,7 +240,7 @@ const Home: React.FC = () => {
       bg: 'bg-teal-50 dark:bg-teal-900/30',
       border: 'border-teal-200 dark:border-teal-800',
       shadow: 'shadow-teal-600',
-      image: '/images/article-mangrove.jpg',
+      image: '/images/konservasi-pohon.png',
       linkText: 'Lihat Peta',
       linkUrl: '/education',
       features: ['Adopsi Pohon', 'Monitoring AI', 'Laporan Tumbuh']
@@ -99,7 +254,7 @@ const Home: React.FC = () => {
       bg: 'bg-slate-50 dark:bg-slate-800/50',
       border: 'border-slate-200 dark:border-slate-700',
       shadow: 'shadow-slate-600',
-      image: '/images/article-zero-waste.jpg',
+      image: '/images/Zero Waste.png',
       linkText: 'Mulai Belajar',
       linkUrl: '/education',
       features: ['Modul Belajar', 'Tantangan 30 Hari', 'Komunitas']
@@ -113,7 +268,7 @@ const Home: React.FC = () => {
       bg: 'bg-blue-50 dark:bg-blue-900/30',
       border: 'border-blue-200 dark:border-blue-800',
       shadow: 'shadow-blue-600',
-      image: '/images/gallery-1.jpg',
+      image: '/images/Eco Tour.png',
       linkText: 'Daftar Trip',
       linkUrl: '/contact',
       features: ['Wisata Minim Karbon', 'Volunteering', 'Workshop Lokal']
@@ -122,6 +277,14 @@ const Home: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-16 md:gap-24 pb-10">
+      
+      {/* Simulation Modal */}
+      <SimulationModal 
+        isOpen={modalOpen} 
+        onClose={() => setModalOpen(false)} 
+        title={activeFeature} 
+      />
+
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center pt-10 md:pt-0 overflow-hidden">
         {/* Mesh Gradients Background */}
@@ -193,7 +356,7 @@ const Home: React.FC = () => {
                    alt="Green Future" 
                    className="w-full h-full object-cover scale-110"
                    onError={(e) => {
-                     (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1913&auto=format&fit=crop'; 
+                     (e.target as HTMLImageElement).src = '/images/beranda.png'; 
                    }}
                  />
                  {/* Floating Card Overlay */}
@@ -222,7 +385,7 @@ const Home: React.FC = () => {
             Program Unggulan
           </h2>
           <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
-            Pilih program yang sesuai dengan passion lingkunganmu. Arahkan kursor untuk efek 3D.
+            Pilih program yang sesuai dengan passion lingkunganmu. Klik fitur di dalam kartu untuk melihat simulasi.
           </p>
         </div>
 
@@ -233,12 +396,12 @@ const Home: React.FC = () => {
               key={item.id}
               className={`
                 group bg-white dark:bg-slate-800 rounded-3xl border-2 ${item.border}
-                /* Kombinasi Efek Tilt + Solid Shadow */
                 shadow-[0_6px_0_0_rgba(0,0,0,0)] ${item.shadow.replace('shadow-', 'shadow-[0_6px_0_0_')}
               `}
             >
               {/* Card Image Header */}
               <div className="h-48 overflow-hidden relative border-b-2 border-slate-100 dark:border-slate-700 rounded-t-[1.4rem]">
+                {/* <--- GANTI NAMA FILE GAMBAR PROGRAM DISINI */}
                 <img 
                   src={item.image} 
                   alt={item.title}
@@ -266,13 +429,22 @@ const Home: React.FC = () => {
                   {item.desc}
                 </p>
 
-                {/* Mini Features List */}
+                {/* Interactive Mini Features List */}
                 <div className="space-y-3 mb-8">
                   {item.features.map((feat, idx) => (
-                    <div key={idx} className="flex items-center gap-3 text-sm font-medium text-slate-600 dark:text-slate-300">
-                      <CheckCircle2 size={16} className={`${item.color} opacity-60`} />
-                      {feat}
-                    </div>
+                    <button 
+                      key={idx} 
+                      onClick={() => handleFeatureClick(feat)}
+                      className="w-full flex items-center justify-between gap-3 text-sm font-medium text-slate-600 dark:text-slate-300 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 group/btn transition-colors text-left"
+                    >
+                      <div className="flex items-center gap-3">
+                         <CheckCircle2 size={16} className={`${item.color} opacity-60`} />
+                         <span>{feat}</span>
+                      </div>
+                      <div className="opacity-0 group-hover/btn:opacity-100 transition-opacity text-emerald-500">
+                        <Play size={12} fill="currentColor" />
+                      </div>
+                    </button>
                   ))}
                 </div>
 
@@ -282,7 +454,7 @@ const Home: React.FC = () => {
                   className={`
                     w-full py-4 rounded-xl flex items-center justify-center gap-2 font-bold text-sm transition-all
                     ${item.bg} ${item.color} hover:brightness-95
-                    transform hover:translate-z-10
+                    transform hover:translate-z-10 relative z-20
                   `}
                   style={{ transform: 'translateZ(10px)' }}
                 >
@@ -299,6 +471,7 @@ const Home: React.FC = () => {
         <div className="relative rounded-[3rem] overflow-hidden bg-slate-900 text-white">
            {/* Background Image with overlay */}
            <div className="absolute inset-0 z-0">
+             {/* <--- GANTI NAMA FILE GAMBAR CTA DISINI */}
              <img 
                src="/images/cta-planting.jpg" 
                alt="CTA" 

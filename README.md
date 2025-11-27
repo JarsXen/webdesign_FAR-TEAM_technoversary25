@@ -43,9 +43,11 @@ Pastikan Anda sudah menginstal **Node.js** di komputer Anda.
     ```
     Buka browser dan akses `http://localhost:5173`
 
-## 👥 Anggota Tim
-1.  **Fajar Irwansah** - Front End Developer
-2.  **LM.Arya Randani** - UI/UX Designer
+## 2. Informasi Tim (Nama Anggota dan Asal Instansi)
+| Posisi | Nama Anggota | Asal Instansi |
+| :--- | :--- | :--- |
+| **Front-End Developer** | Fajar Irwansah | Universitas Ahmad Dahlan (UAD) |
+| **UI/UX Designer** | LM. Arya Randani | Universitas Ahmad Dahlan (UAD) |
 
 ---
 *Dibuat dengan ❤️ untuk Technoversary 2025*

@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { CheckCircle2, Users, Target, Heart, Maximize2, X, ImageOff, Quote } from 'lucide-react';
 import { TeamMember } from '../types';
 
-// <--- GANTI NAMA FILE FOTO TIM DI SINI --->
 const teamMembers: TeamMember[] = [
   { 
     name: "Fajar Irwansah", 
@@ -62,7 +61,6 @@ const About: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="relative">
              <div className="absolute -inset-4 bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900 dark:to-teal-900 rounded-[2rem] blur-lg opacity-70 dark:opacity-50 transition-colors"></div>
-             {/* <--- GANTI NAMA FILE GAMBAR MISI DI SINI */}
              <img 
                 src="/images/about-mission.jpg" 
                 alt="Misi Kami" 

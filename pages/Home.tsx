@@ -43,14 +43,12 @@ const TiltCard = ({ children, className, style }: { children: React.ReactNode, c
         ...style,
         transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) scale3d(1, 1, 1)`,
         transformStyle: 'preserve-3d',
-        // FIX: Mencegah border-radius glitch (menjadi kotak) saat animasi 3D
         isolation: 'isolate',
         WebkitMaskImage: '-webkit-radial-gradient(white, black)', 
       }}
     >
       {children}
       
-      {/* Efek Kilau (Glare) */}
       <div 
         className="absolute inset-0 pointer-events-none rounded-3xl z-20 mix-blend-overlay"
         style={{
@@ -155,7 +153,6 @@ const SimulationModal: React.FC<SimulationModalProps> = ({ isOpen, onClose, titl
       )
     }
 
-    // Default Chart
     return (
       <div className="flex flex-col items-center justify-center p-6 h-64">
         <BarChart3 size={64} className="text-slate-300 dark:text-slate-600 mb-4" />
@@ -375,7 +372,6 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Program Unggulan - 3D Cards Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <span className="inline-block py-1 px-3 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-xs font-bold mb-4 tracking-wide uppercase">
@@ -471,7 +467,6 @@ const Home: React.FC = () => {
         <div className="relative rounded-[3rem] overflow-hidden bg-slate-900 text-white">
            {/* Background Image with overlay */}
            <div className="absolute inset-0 z-0">
-             {/* <--- GANTI NAMA FILE GAMBAR CTA DISINI */}
              <img 
                src="/images/cta-planting.jpg" 
                alt="CTA" 

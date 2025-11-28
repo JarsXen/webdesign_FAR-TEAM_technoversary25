@@ -102,10 +102,8 @@ const Education: React.FC = () => {
   const [selectedWaste, setSelectedWaste] = useState<string>(wasteTypes[0].id);
   const [weight, setWeight] = useState<number>(0);
   
-  // State untuk "Lihat Semua" Artikel
   const [showAllArticles, setShowAllArticles] = useState(false);
   
-  // State untuk Modal Galeri
   const [selectedGalleryItem, setSelectedGalleryItem] = useState<GalleryItem | null>(null);
 
   const handleGenerateTip = async () => {
@@ -122,7 +120,6 @@ const Education: React.FC = () => {
     return waste ? waste.pricePerKg * weight : 0;
   };
 
-  // Logic untuk menampilkan artikel (Semua atau Terbatas 4)
   const displayedArticles = showAllArticles ? articles : articles.slice(0, 4);
 
   return (

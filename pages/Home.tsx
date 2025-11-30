@@ -61,7 +61,6 @@ const TiltCard = ({ children, className, style }: { children: React.ReactNode, c
   );
 };
 
-// --- Komponen Modal Simulasi ---
 interface SimulationModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -397,7 +396,6 @@ const Home: React.FC = () => {
             >
               {/* Card Image Header */}
               <div className="h-48 overflow-hidden relative border-b-2 border-slate-100 dark:border-slate-700 rounded-t-[1.4rem]">
-                {/* <--- GANTI NAMA FILE GAMBAR PROGRAM DISINI */}
                 <img 
                   src={item.image} 
                   alt={item.title}
